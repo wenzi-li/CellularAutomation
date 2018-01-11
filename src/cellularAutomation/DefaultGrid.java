@@ -1,13 +1,12 @@
 package cellularAutomation;
 /**
- * 随机初始化;
- * 随机创建n个cells;
+ * 加载网格
  * @author wenzi
  *
  */
-public class Random {
-	
-	public Random(Field field) {
+public class DefaultGrid {
+
+	public DefaultGrid(Field field) {
 		
 		for (int i = 0; i < field.getHEIGHT(); i++) {
             for (int j = 0; j < field.getWIDTH(); j++) {
@@ -19,10 +18,9 @@ public class Random {
 		for (int i = 0; i < field.getHEIGHT(); i++) {
 	        for (int j = 0; j < field.getWIDTH(); j++) {
 	            Cell cell = field.get(i,j);
-	            if (Math.random() < 0.2) {
-	                cell.reborn();
-	            }
 	        }
 	    }
+		
 	}
+	
 }

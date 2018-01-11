@@ -20,35 +20,8 @@ public class CellularAutomation {
         View view = new View(field);
         MyMenu menu = new MyMenu(view);
         
-        new Random(field);
-        
-        switch (menu.getComboValue()) {
-		case "Glider":
-			//frame.repaint();
-			new Glider(field);
-			break;
-		case "Small Exploder":
-			//frame.repaint();
-			new SmallExploder(field);
-			break;
-		case "Exploder":
-			//frame.repaint();
-			new Exploder(field);
-			break;
-		case "10 Cell Row":
-			//frame.repaint();
-			new TenCellRow(field);
-			break;
-		case " Gosper Glider Gun":
-			//frame.repaint();
-			new GosperGliderGun(field);
-			break;
-
-		default: new Random(field);
-			break;
-		}
-        
-        
+        new DefaultGrid(field);
+ 
         frame.add(menu, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Cellular Automation");
@@ -57,20 +30,13 @@ public class CellularAutomation {
         frame.pack();
         frame.setVisible(true);
         
-        
-        
-        
 
-        for (int i = 0; i < 1000; i++) {
-            if (i == 0)
-                System.out.print("\n初始化状态\n\n");
-            else
-                System.out.printf("\n第%02d次迭代\n\n",i);
+        for (int i = 0; i < 10000; i++) {
 
-
+        	
             long endTime = System.currentTimeMillis();
             view.setTime("" + (endTime - startTime)/1000 + "s");
-            
+
             int [][] num = new int [field.getHEIGHT()][field.getWIDTH()];        //每个细胞周围存活的细胞数；
             Cell [][] cell = new Cell [field.getHEIGHT()][field.getWIDTH()];     //每个细胞;
 
@@ -90,84 +56,29 @@ public class CellularAutomation {
 
             for (int x = 0; x < field.getHEIGHT(); x++) {
                 for (int y = 0; y < field.getWIDTH(); y++) {
-                    System.out.printf("[%02d][%02d]号-->", x, y);
-                    System.out.print((cell[x][y].isAlive() ? "健康" : "死亡") + "-->");
-                    System.out.print("周围存活数量：" + num[x][y] + " -->下一轮状态-->");
+
                     if (cell[x][y].isAlive()) {
                         if (num[x][y] < 2 || num[x][y] > 3) {
                             cell[x][y].die();
-                            System.out.print("死亡");
-                        }else
-                            System.out.print("健康");
+                            
+                        }else{
+                            
+                        }
                     } else if (num[x][y] == 3) {
                         cell[x][y].reborn();
-                        System.out.print("重生");
+                       
                     }
-                    System.out.println();
                     
                 }
             }
  
+            
+         //System.out.println(menu.getComboValue());
+					
+  
             //点击clear按钮；
             if (menu.getClear() == 0) {
             	field.clear();
-
-                switch (menu.getComboValue()) {
-        		case "Glider":
-       			new Thread(new Runnable() {
-						@Override
-						public void run() {
-						new Glider(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		case "Small Exploder":
-        			new Thread(new Runnable() {
-						@Override
-						public void run() {
-							new SmallExploder(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		case "Exploder":
-        			new Thread(new Runnable() {
-						@Override
-						public void run() {
-							new Exploder(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		case "10 Cell Row":
-        			new Thread(new Runnable() {
-						@Override
-						public void run() {
-							new TenCellRow(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		case " Gosper Glider Gun":
-        			new Thread(new Runnable() {
-						@Override
-						public void run() {
-							new GosperGliderGun(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		default: 
-	        		new Thread(new Runnable() {
-						@Override
-						public void run() {
-							new Random(field);
-							menu.setClear(1);
-						}
-					}).start();
-        			break;
-        		}
             	
             }else {
             	
@@ -175,17 +86,47 @@ public class CellularAutomation {
             
             //点击stop按钮；
             if (menu.getStopOrStart() == 0) {
+                /**
+    	    	 * 组合框选择不同模型；
+    	    	 */
+    	        switch (menu.getComboValue()) {
+    			case "Glider":
+    				
+    				new Glider(field);
+    				menu.setStopOrStart(1);
+    				
+    				break;
+    			case "Small Exploder":
+    				new SmallExploder(field);
+    				
+    				break;
+    			case "Exploder":
+    				new Exploder(field);
+    				
+    				break;
+    			case "10 Cell Row":
+    				new TenCellRow(field);
+    				
+    				break;
+    			case "Gosper Glider Gun":
+    				new GosperGliderGun(field);
+    				
+    				break;
+    			case "RandomCells":
+    				new Random(field);
+    				
+    				break;
+    			}
             	
             }else {
-            	 frame.repaint();
+				frame.repaint();
+				try {
+			         Thread.sleep(1000 - menu.getSpeed());
+			          } catch (InterruptedException e) {
+			                e.printStackTrace();
+			          }
 			} 
-            try {
-                Thread.sleep(2000 - menu.getSpeed());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
-
-    }
-    
+        
+    }  
 }

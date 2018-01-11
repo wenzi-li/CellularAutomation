@@ -13,8 +13,8 @@ public class View extends JPanel {
 
 	private static final long serialVersionUID = -5258995676212660595L;
     private int SIZE = 20;   //每个细胞即格子的大小；
-    private Field aField;  
-    private String time;
+    private Field aField;      //网格
+    private String time;     //程序运行时长；
 
 	public String getTime() {
 		return time;
@@ -31,8 +31,6 @@ public class View extends JPanel {
 	public void setSIZE(int sIZE) {
 		SIZE = sIZE;
 	}
-
-
 
 	public View(Field aField) {
         this.aField = aField; 
@@ -55,7 +53,6 @@ public class View extends JPanel {
         }
     }
 
-    
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(1000,

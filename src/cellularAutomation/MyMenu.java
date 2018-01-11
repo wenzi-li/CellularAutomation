@@ -2,7 +2,6 @@ package cellularAutomation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -20,13 +19,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MyMenu extends JPanel {
-	
+	private static final long serialVersionUID = -5258995676212660595L;
 	private View v;
 	private JPanel panel;
 	private int speed;     //sleep时长；
 	private int stopOrStart =0 ;   //开始和暂停，1表示开始，0表示暂停；
 	private int clear =1 ;   //开始和暂停，0表示清屏；
-	private String comboValue;   //组合框内的字符；
+	private String comboValue = null ;   //组合框内的字符；
 	
 	
 	
@@ -90,7 +89,7 @@ public class MyMenu extends JPanel {
         addButton(clearAction1);
         addButton(startAction);
         addButton(stopAction);
-        addSlider1("src/cellularAutomation/speed_32px.png",0,2000,1000);
+        addSlider1("src/cellularAutomation/speed_32px.png",0,1000,500);
         addSlider2("src/cellularAutomation/resize_32px.png",5,30,20);
         addLabel();
         add(panel, BorderLayout.SOUTH);
@@ -150,7 +149,7 @@ public class MyMenu extends JPanel {
         specialCombo.addItem("Small Exploder");
         specialCombo.addItem("Exploder");
         specialCombo.addItem("10 Cell Row");
-        specialCombo.addItem(" Gosper Glider Gun");
+        specialCombo.addItem("Gosper Glider Gun");
         panel.add(specialCombo);
     }
     
@@ -168,6 +167,8 @@ public class MyMenu extends JPanel {
     	/**
     	 * 点击按钮或按下快捷键同时响应动作；
     	 */
+    	private static final long serialVersionUID = -5258995676212660595L;
+    	
     	public buttonAction1 (String name, int c) {
     		putValue(Action.NAME, name);
     		putValue(Action.SHORT_DESCRIPTION, name.toLowerCase());
@@ -188,6 +189,7 @@ public class MyMenu extends JPanel {
     	/**
     	 * 点击按钮或按下快捷键同时响应动作；
     	 */
+    	private static final long serialVersionUID = -5258995676212660595L;
     	public buttonAction (String name, int s) {
     		putValue(Action.NAME, name);
     		putValue(Action.SHORT_DESCRIPTION, name.toLowerCase());
