@@ -26,9 +26,7 @@ public class MyMenu extends JPanel {
 	private int stopOrStart =0 ;   //开始和暂停，1表示开始，0表示暂停；
 	private int clear =1 ;   //开始和暂停，0表示清屏；
 	private String comboValue = null ;   //组合框内的字符；
-	
-	
-	
+
 	public String getComboValue() {
 		return comboValue;
 	}
@@ -89,8 +87,8 @@ public class MyMenu extends JPanel {
         addButton(clearAction1);
         addButton(startAction);
         addButton(stopAction);
-        addSlider1("src/cellularAutomation/speed_32px.png",0,1000,500);
-        addSlider2("src/cellularAutomation/resize_32px.png",5,30,20);
+        addSlider1("src/images/speed_32px.png",0,1000,500);
+        addSlider2("src/images/resize_32px.png",5,30,20);
         addLabel();
         add(panel, BorderLayout.SOUTH);
         
@@ -106,6 +104,7 @@ public class MyMenu extends JPanel {
 	}
 	
 
+	//运动速度滑动条；
 	private void addSlider1 (String path,int x, int y, int z) {
 		   
     	JSlider slider = new JSlider(x, y, z);
@@ -121,7 +120,7 @@ public class MyMenu extends JPanel {
 		});
     }
 	
-	
+	//网格大小滑动条；
 	private void addSlider2 (String path,int x, int y, int z) {
 		   
     	JSlider slider = new JSlider(x, y, z);
@@ -133,6 +132,7 @@ public class MyMenu extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				v.setSIZE(slider.getValue()) ;
+				v.setLocation(-slider.getValue(), -slider.getValue());
 			}
 		});
     }
@@ -140,8 +140,8 @@ public class MyMenu extends JPanel {
      //组合框
     private void addComboBox() {
         JComboBox<String> specialCombo= new JComboBox<String>();
-        specialCombo.addActionListener(event ->
-        		setComboValue(specialCombo.getItemAt(specialCombo.getSelectedIndex())));
+        specialCombo.addItemListener(event -> 
+        			setComboValue(specialCombo.getItemAt(specialCombo.getSelectedIndex())));
         specialCombo.setBackground(Color.WHITE);
         specialCombo.setFont(new Font("微软雅黑", Font.PLAIN, 20));
         specialCombo.addItem("RandomCells");
@@ -153,7 +153,7 @@ public class MyMenu extends JPanel {
         panel.add(specialCombo);
     }
     
-    //添加按钮
+    //添加清理按钮
     private void addButton(Action action) {
     	JButton button = new JButton(action);
     	button.setBackground(Color.WHITE);
@@ -184,7 +184,7 @@ public class MyMenu extends JPanel {
     
     
     
-    //监听按钮；
+    //监听开始、暂停按钮；
     public class buttonAction extends AbstractAction{
     	/**
     	 * 点击按钮或按下快捷键同时响应动作；
@@ -199,6 +199,7 @@ public class MyMenu extends JPanel {
     	public void actionPerformed(ActionEvent event) {
     		int s =(int) getValue("stopOrStart");
     		setStopOrStart(s);
+    		
     	}
     }
     

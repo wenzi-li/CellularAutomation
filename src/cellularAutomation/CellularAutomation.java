@@ -11,71 +11,30 @@ import javax.swing.*;
 public class CellularAutomation {
 	
     public static void main(String[] args) {
-    	//记录程序开始时间
-    	long startTime = System.currentTimeMillis();
-    	//创建网格
-        Field field = new Field(250,140);
-
+    	
+    	long startTime = System.currentTimeMillis();           //记录程序开始时间；
+        Field field = new Field(250,140);                      //创建网格；
         JFrame frame = new JFrame();
-        View view = new View(field);
-        MyMenu menu = new MyMenu(view);
-        
-        new DefaultGrid(field);
- 
+        View view = new View(field);                           //游戏视图；
+        MyMenu menu = new MyMenu(view);                        //加载下方的功能键；
+        new DefaultGrid(field);                                //记载网格；
         frame.add(menu, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Cellular Automation");
+        frame.setIconImage(new ImageIcon("src/images/cells_128px.png").getImage());
         frame.setLocation(300,50);
         frame.add(view);
         frame.pack();
         frame.setVisible(true);
         
-
+        /*
+         * 循环重画窗口，显示动态画面；
+         */
         for (int i = 0; i < 10000; i++) {
-
-        	
-            long endTime = System.currentTimeMillis();
-            view.setTime("" + (endTime - startTime)/1000 + "s");
-
-            int [][] num = new int [field.getHEIGHT()][field.getWIDTH()];        //每个细胞周围存活的细胞数；
-            Cell [][] cell = new Cell [field.getHEIGHT()][field.getWIDTH()];     //每个细胞;
-
-            for (int x = 0; x < field.getHEIGHT(); x++) {
-                for (int y = 0; y < field.getWIDTH(); y++) {
-                    int numOfLive = 0;
-                    cell[x][y] = field.get(x,y);
-                    Cell[] neighbour = field.getNeighbour(x,y);
-                    for (Cell cell1 : neighbour) {
-                        if ( cell1.isAlive()) {
-                            numOfLive++;
-                        }
-                    }
-                    num[x][y] = numOfLive;
-                }
-            }
-
-            for (int x = 0; x < field.getHEIGHT(); x++) {
-                for (int y = 0; y < field.getWIDTH(); y++) {
-
-                    if (cell[x][y].isAlive()) {
-                        if (num[x][y] < 2 || num[x][y] > 3) {
-                            cell[x][y].die();
-                            
-                        }else{
-                            
-                        }
-                    } else if (num[x][y] == 3) {
-                        cell[x][y].reborn();
-                       
-                    }
-                    
-                }
-            }
- 
+            long endTime = System.currentTimeMillis();               //记录程序当前时间；
+            view.setTime("" + (endTime - startTime)/1000 + "s");     //打印游戏时长；
+            new GameLogic(field);                                    //加载游戏画面；
             
-         //System.out.println(menu.getComboValue());
-					
-  
             //点击clear按钮；
             if (menu.getClear() == 0) {
             	field.clear();
@@ -91,42 +50,39 @@ public class CellularAutomation {
     	    	 */
     	        switch (menu.getComboValue()) {
     			case "Glider":
-    				
     				new Glider(field);
     				menu.setStopOrStart(1);
-    				
     				break;
     			case "Small Exploder":
     				new SmallExploder(field);
-    				
+    				menu.setStopOrStart(1);
     				break;
     			case "Exploder":
     				new Exploder(field);
-    				
+    				menu.setStopOrStart(1);
     				break;
     			case "10 Cell Row":
     				new TenCellRow(field);
-    				
+    				menu.setStopOrStart(1);
     				break;
     			case "Gosper Glider Gun":
     				new GosperGliderGun(field);
-    				
+    				menu.setStopOrStart(1);
     				break;
     			case "RandomCells":
     				new Random(field);
-    				
+    				//menu.setStopOrStart(1);
     				break;
     			}
             	
             }else {
-				frame.repaint();
+				view.repaint();
 				try {
 			         Thread.sleep(1000 - menu.getSpeed());
 			          } catch (InterruptedException e) {
 			                e.printStackTrace();
 			          }
 			} 
-        }
-        
+        } 
     }  
 }

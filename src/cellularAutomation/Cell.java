@@ -30,7 +30,6 @@ public class Cell {
         g2.setColor(c);
         if ( isAlive() ){
         	g2.setColor(new Color(67, 67, 67));
-        	//g2.drawImage(new ImageIcon("src/cellularAutomation/pacman_24px.png").getImage(), x, y, null);
             g2.fillRect(x+1, y+1, size, size);
         }
     }

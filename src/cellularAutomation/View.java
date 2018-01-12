@@ -36,6 +36,7 @@ public class View extends JPanel {
         this.aField = aField; 
     }
 
+	//显示画面；
     public void paintComponent(Graphics g ) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;

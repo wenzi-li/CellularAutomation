@@ -17,7 +17,7 @@ public class DefaultGrid {
 		
 		for (int i = 0; i < field.getHEIGHT(); i++) {
 	        for (int j = 0; j < field.getWIDTH(); j++) {
-	            Cell cell = field.get(i,j);
+	            field.get(i,j);
 	        }
 	    }
 		
